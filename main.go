@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 
 	"github.com/Baz00k/advent-of-code-2023/day01"
 	"github.com/Baz00k/advent-of-code-2023/day02"
@@ -17,8 +18,7 @@ func main() {
 	flag.Parse()
 
 	if *day == 0 && *d == 0 {
-		fmt.Println("Please provide a day to solve.")
-		return
+		log.Fatal("No day provided.")
 	}
 
 	dayToSolve := *day
