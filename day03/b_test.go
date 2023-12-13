@@ -10,7 +10,7 @@ func TestSolvePartB(t *testing.T) {
 	input, err := helpers.ReadChars("test.txt")
 
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 
 	result := SolvePartB(input)

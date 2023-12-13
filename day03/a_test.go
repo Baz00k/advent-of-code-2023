@@ -10,12 +10,12 @@ func TestSolvePartA(t *testing.T) {
 	input, err := helpers.ReadChars("test.txt")
 
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 
 	result := SolvePartA(input)
 
-	if result != 4361{
+	if result != 4361 {
 		t.Errorf("Expected 4361, got %d", result)
 
 		return
