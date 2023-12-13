@@ -11,7 +11,7 @@ func SolvePartB(input []string) int {
 	seedsLine := strings.Split(input[0], " ")
 
 	var rangeStart int
-	var seeds []valuesRange
+	var seedRanges []valuesRange
 
 	for _, seed := range seedsLine[1:] {
 		seedInt, err := strconv.Atoi(seed)
@@ -25,7 +25,7 @@ func SolvePartB(input []string) int {
 			continue
 		}
 
-		seeds = append(seeds, valuesRange{
+		seedRanges = append(seedRanges, valuesRange{
 			start: rangeStart,
 			end:   rangeStart + seedInt - 1,
 		})
@@ -68,8 +68,8 @@ func SolvePartB(input []string) int {
 	var locations []valuesRange
 
 	// Now we have a chain of remaps, we can iterate over the seeds to get the final value
-	for _, seed := range seeds {
-		locations = append(locations, remapper.remap(seed)...)
+	for _, seedRange := range seedRanges {
+		locations = append(locations, remapper.remap(seedRange)...)
 	}
 
 	// Return lowest value
