@@ -76,35 +76,34 @@ func mergeOverlapingRanges(ranges *[]*remapRange) {
 	mergeOverlapingRanges(ranges)
 }
 
-func remapRangeFromLine(line string) *remapRange {
+func parseRemapSource(line string) []int {
 	// Line should be in the format:
 	// 50 98 2
 	// Where 50 is destination range start, 98 is source range start, and 2 is range length
-	remapSource := strings.Split(strings.TrimSpace(line), " ")
-
-	if len(remapSource) != 3 {
+	remapSourceParts := strings.Split(strings.TrimSpace(line), " ")
+	if len(remapSourceParts) != 3 {
 		panic("Invalid remap source")
 	}
 
-	remapSourceStart, err := strconv.Atoi(remapSource[0])
-	if err != nil {
-		panic(err)
+	remapSource := make([]int, 3)
+	for i, part := range remapSourceParts {
+		num, err := strconv.Atoi(part)
+		if err != nil {
+			panic(err)
+		}
+		remapSource[i] = num
 	}
 
-	remapDestStart, err := strconv.Atoi(remapSource[1])
-	if err != nil {
-		panic(err)
-	}
+	return remapSource
+}
 
-	remapLength, err := strconv.Atoi(remapSource[2])
-	if err != nil {
-		panic(err)
-	}
+func remapRangeFromLine(line string) *remapRange {
+	remapSource := parseRemapSource(line)
 
 	return &remapRange{
-		start: remapDestStart,
-		end:   remapDestStart + remapLength - 1,
-		shift: remapSourceStart - remapDestStart,
+		start: remapSource[1],
+		end:   remapSource[1] + remapSource[2] - 1,
+		shift: remapSource[0] - remapSource[1],
 	}
 }
 
@@ -167,12 +166,12 @@ func (r remapChain) remap(vr valuesRange) []valuesRange {
 
 	// We need to split the range
 	var breakPoints []int
-	breakPoints = append(breakPoints, vr.start, vr.end)
 	for _, remap := range r.remaps {
 		if remap.inRangePartially(vr) {
 			breakPoints = append(breakPoints, remap.start, remap.end)
 		}
 	}
+	breakPoints = append(breakPoints, vr.start, vr.end)
 	sort.Ints(breakPoints)
 
 	var newRanges []*valuesRange
