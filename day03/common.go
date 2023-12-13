@@ -11,48 +11,28 @@ func isSymbol(b byte) bool {
 	return !isDigit(b) && b != '.'
 }
 
+var directions = [][2]int{
+	{0, -1},  // Up
+	{1, 0},   // Right
+	{0, 1},   // Down
+	{-1, 0},  // Left
+	{1, -1},  // Top right
+	{1, 1},   // Bottom right
+	{-1, 1},  // Bottom left
+	{-1, -1}, // Top left
+}
+
 // Return iterator with coordinates of all adjacent cells
 func getAdjacentCells(input [][]byte, x int, y int) [](struct{ x, y int }) {
 	adjacentCells := [](struct{ x, y int }){}
 
-	// Check if the cell to the left exists
-	if x > 0 {
-		adjacentCells = append(adjacentCells, struct{ x, y int }{x - 1, y})
-	}
+	for _, direction := range directions {
+		adjacentX := x + direction[0]
+		adjacentY := y + direction[1]
 
-	// Check if the cell to the right exists
-	if x < len(input[y])-1 {
-		adjacentCells = append(adjacentCells, struct{ x, y int }{x + 1, y})
-	}
-
-	// Check if the cell above exists
-	if y > 0 {
-		adjacentCells = append(adjacentCells, struct{ x, y int }{x, y - 1})
-	}
-
-	// Check if the cell below exists
-	if y < len(input)-1 {
-		adjacentCells = append(adjacentCells, struct{ x, y int }{x, y + 1})
-	}
-
-	// Check if the cell to the top left exists
-	if x > 0 && y > 0 {
-		adjacentCells = append(adjacentCells, struct{ x, y int }{x - 1, y - 1})
-	}
-	
-	// Check if the cell to the top right exists
-	if x < len(input[y])-1 && y > 0 {
-		adjacentCells = append(adjacentCells, struct{ x, y int }{x + 1, y - 1})
-	}
-
-	// Check if the cell to the bottom left exists
-	if x > 0 && y < len(input)-1 {
-		adjacentCells = append(adjacentCells, struct{ x, y int }{x - 1, y + 1})
-	}
-
-	// Check if the cell to the bottom right exists
-	if x < len(input[y])-1 && y < len(input)-1 {
-		adjacentCells = append(adjacentCells, struct{ x, y int }{x + 1, y + 1})
+		if adjacentX >= 0 && adjacentX < len(input[0]) && adjacentY >= 0 && adjacentY < len(input) {
+			adjacentCells = append(adjacentCells, struct{ x, y int }{adjacentX, adjacentY})
+		}
 	}
 
 	return adjacentCells
@@ -70,13 +50,13 @@ func isAdjacentToSymbol(input [][]byte, x int, y int) bool {
 }
 
 func isEndOfNumber(input [][]byte, x int, y int) bool {
-	// If the cell to the right isn't a digit, the current digit is the end of the number 
-	return x == len(input[y])-1 || !isDigit(input[y][x+1]) 
+	// If the cell to the right isn't a digit, the current digit is the end of the number
+	return x == len(input[y])-1 || !isDigit(input[y][x+1])
 }
 
 func isStartOfNumber(input [][]byte, x int, y int) bool {
-	// If the cell to the left isn't a digit, the current digit is the start of the number 
-	return x == 0 || !isDigit(input[y][x-1]) 
+	// If the cell to the left isn't a digit, the current digit is the start of the number
+	return x == 0 || !isDigit(input[y][x-1])
 }
 
 func getNumber(input [][]byte, x int, y int) int {
@@ -92,7 +72,7 @@ func getNumber(input [][]byte, x int, y int) int {
 		start--
 	}
 
-	for !isEndOfNumber(input, end, y) { 
+	for !isEndOfNumber(input, end, y) {
 		end++
 	}
 
@@ -117,7 +97,7 @@ func isGear(input [][]byte, x int, y int) (bool, int) {
 	numbers := [](int){}
 	for _, cell := range getAdjacentCells(input, x, y) {
 		number := getNumber(input, cell.x, cell.y)
-		
+
 		// Append only unique numbers
 		// This assumes that gears are made of 2 UNIQUE numbers
 		// This approach is far from perfect, but it works for the input and is fast enough
