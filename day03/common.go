@@ -107,7 +107,7 @@ func isGear(input [][]byte, x int, y int) (bool, int) {
 		}
 	}
 
-	if len(numbers) == 2 {
+	if len(numbers) != 2 {
 		return false, 0
 	}
 
