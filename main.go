@@ -10,6 +10,7 @@ import (
 	"github.com/Baz00k/advent-of-code-2023/day03"
 	"github.com/Baz00k/advent-of-code-2023/day04"
 	"github.com/Baz00k/advent-of-code-2023/day05"
+	"github.com/Baz00k/advent-of-code-2023/day06"
 )
 
 func main() {
@@ -37,6 +38,8 @@ func main() {
 		day04.Solve()
 	case 5:
 		day05.Solve()
+	case 6:
+		day06.Solve()
 	default:
 		fmt.Println("Invalid day provided.")
 	}
