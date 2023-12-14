@@ -11,6 +11,11 @@ import (
 func Scaffold(day int) {
 	dayStr := fmt.Sprintf("%02d", day)
 
+	// Check if the day already exists
+	if _, err := os.Stat("day" + dayStr); !os.IsNotExist(err) {
+		log.Fatalf("Day %d already exists.", day)
+	}
+
 	// Create the directory for the day
 	os.Mkdir("day"+dayStr, 0755)
 
@@ -46,8 +51,6 @@ func Scaffold(day int) {
 
 		newFile.Close()
 	}
-
-	// ... existing code ...
 
 	// Add the new day to the solve.go file in the root directory
 	solveFile, _ := os.ReadFile("solve.go")
