@@ -9,6 +9,7 @@ import (
 	"github.com/Baz00k/advent-of-code-2023/day04"
 	"github.com/Baz00k/advent-of-code-2023/day05"
 	"github.com/Baz00k/advent-of-code-2023/day06"
+	"github.com/Baz00k/advent-of-code-2023/day07"
 )
 
 type SolveFunc func()
@@ -20,6 +21,7 @@ var solveFuncs = map[int]SolveFunc{
 	4: day04.Solve,
 	5: day05.Solve,
 	6: day06.Solve,
+	7: day07.Solve,
 }
 
 func Solve(day int) {
