@@ -2,20 +2,15 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 
-	"github.com/Baz00k/advent-of-code-2023/day01"
-	"github.com/Baz00k/advent-of-code-2023/day02"
-	"github.com/Baz00k/advent-of-code-2023/day03"
-	"github.com/Baz00k/advent-of-code-2023/day04"
-	"github.com/Baz00k/advent-of-code-2023/day05"
-	"github.com/Baz00k/advent-of-code-2023/day06"
+	"github.com/Baz00k/advent-of-code-2023/helpers"
 )
 
 func main() {
 	day := flag.Int("day", 0, "Specify the day to solve.")
 	d := flag.Int("d", 0, "Specify the day to solve.")
+	op := flag.String("op", "solve", "Specify the operation (solve or scaffold).")
 	flag.Parse()
 
 	if *day == 0 && *d == 0 {
@@ -27,20 +22,18 @@ func main() {
 		dayToSolve = *d
 	}
 
-	switch dayToSolve {
-	case 1:
-		day01.Solve()
-	case 2:
-		day02.Solve()
-	case 3:
-		day03.Solve()
-	case 4:
-		day04.Solve()
-	case 5:
-		day05.Solve()
-	case 6:
-		day06.Solve()
+	// Manually parse non-flag arguments
+	args := flag.Args()
+	if len(args) > 0 {
+		*op = args[0]
+	}
+
+	switch *op {
+	case "solve":
+		Solve(dayToSolve)
+	case "scaffold":
+		helpers.Scaffold(dayToSolve)
 	default:
-		fmt.Println("Invalid day provided.")
+		log.Fatal("Invalid operation provided.")
 	}
 }

@@ -1,0 +1,22 @@
+{
+   "version": "2.0.0",
+   "tasks": [
+      {
+         "label": "Scaffold Day",
+         "type": "shell",
+         "command": "go",
+         "args": ["run", ".", "-d=${input:day}", "scaffold"],
+         "problemMatcher": [],
+         "presentation": {
+            "reveal": "always"
+         }
+      }
+   ],
+   "inputs": [
+      {
+         "id": "day",
+         "type": "promptString",
+         "description": "Enter the day to scaffold (e.g., 1, 2, 3, ...)"
+      }
+   ]
+}

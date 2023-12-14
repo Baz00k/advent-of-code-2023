@@ -7,7 +7,7 @@
          "request": "launch",
          "mode": "auto",
          "program": "${workspaceFolder}",
-         "args": ["-d=${input:day}"]
+         "args": ["-d=${input:day}", "solve"]
       }
    ],
    "inputs": [
