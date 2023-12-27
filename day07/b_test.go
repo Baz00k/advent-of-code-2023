@@ -1,7 +1,7 @@
 package day07
 
 import (
-    "testing"
+	"testing"
 
 	"github.com/Baz00k/advent-of-code-2023/helpers"
 )
@@ -15,8 +15,8 @@ func TestSolvePartB(t *testing.T) {
 
 	result := SolvePartB(input)
 
-	if result != 0 {
-		t.Errorf("Expected 0, got %d", result)
+	if result != 5905 {
+		t.Errorf("Expected 5905, got %d", result)
 
 		return
 	}
